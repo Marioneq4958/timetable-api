@@ -4,7 +4,7 @@ bs4
 beautifulsoup4
 pydantic
 fastapi
-fastapi_cache
+fastapi_cache2
 uvicorn
 redis
 starlette
