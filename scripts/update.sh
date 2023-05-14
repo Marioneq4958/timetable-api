@@ -1,3 +1,3 @@
 git fetch
 git pull
-./start.sh
+./scripts/start.sh
