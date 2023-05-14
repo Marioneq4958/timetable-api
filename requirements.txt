@@ -1,0 +1,10 @@
+enum34
+aiohttp
+bs4
+beautifulsoup4
+pydantic
+fastapi
+fastapi_cache
+uvicorn
+redis
+starlette
