@@ -19,17 +19,14 @@ def extract_unit_code_and_name(
         )
         if match:
             return match["code"], match["name"].strip()
-        else:
-            return full_name, None
-    else:
-        match = re.search(
+        return full_name, None
+    match = re.search(
             r"^(?P<code>[0-9A-Za-z_/\-]*) (?P<name>[0-9A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ \-_./]*)",
             full_name,
-        )
-        if match:
-            return match["code"], match["name"].strip()
-        else:
-            return full_name, None
+    )
+    if match:
+        return match["code"], match["name"].strip()
+    return full_name, None
 
 
 def verify_timetable_page(html: str) -> bool:
@@ -129,5 +126,4 @@ def extract_unit_type_and_id_from_url(
     match = re.search(r"(?P<type>[ons])(?P<id>\d+)\.html", url)
     if match:
         return UnitType.get_by_code(match["type"]), int(match["id"])
-    else:
-        return None, None
+    return None, None

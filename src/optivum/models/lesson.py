@@ -31,10 +31,9 @@ class TimeSlot(BaseModel):
         soup = BeautifulSoup(row, "html.parser")
         number_tag = soup.select_one("td.nr")
         hours_tag = soup.select_one("td.g")
+        number = None
         if number_tag.text.isnumeric():
             number = int(number_tag.text)
-        else:
-            number = None
         start: time = time(*map(int, hours_tag.text.split("-")[0].strip().split(":")))
         end: time = time(*map(int, hours_tag.text.split("-")[1].strip().split(":")))
         return TimeSlot(
@@ -143,18 +142,16 @@ class Lesson(BaseModel):
         )
 
         # Group name
+        group_code = None
         if "-" in subject_code:
             group_code = subject_code.split("-")[-1]
             subject_code = subject_code.replace(f"-{group_code}", "")
-        else:
-            group_code = None
 
         # Interbranch group code
+        interbranch_group_code = None
         if "#" in subject_code and len(soup.select(".p")) >= 2:
             interbranch_group_code = subject_code.split("#")[-1]
             subject_code = subject_code.replace(f"#{interbranch_group_code}", "")
-        else:
-            interbranch_group_code = None
         [subject_tag.extract() for subject_tag in soup.select(".p")]
 
         # Room

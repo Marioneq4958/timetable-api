@@ -31,6 +31,8 @@ class Context(BaseModel):
             raise APIException(504, "Gateway timeout")
         school_name: Optional[str] = get_school_name(await response.text())
         units: list[Unit] = await Unit.get(list_url)
+        generation_date = None
+        validation_date = None
         if units:
             url: str = get_unit_url(list_url, units[0].id, units[0].type)
             try:
@@ -40,9 +42,6 @@ class Context(BaseModel):
             html: str = await response.text()
             generation_date = get_timetable_generation_date(html)
             validation_date = get_timetable_validation_date(html)
-        else:
-            generation_date = None
-            validation_date = None
         await session.close()
         return Context(
             school_name=school_name,
