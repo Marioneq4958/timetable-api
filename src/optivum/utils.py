@@ -31,11 +31,11 @@ def extract_unit_code_and_name(
 
 def verify_timetable_page(html: str) -> bool:
     soup = BeautifulSoup(html, "html.parser")
-    return (
-        soup.select_one('meta[name="description"]')
-        and " programu Plan lekcji Optivum firmy VULCAN"
-        in soup.select_one('meta[name="description"]')["content"]
-    )
+    if soup.select_one('meta[name="description"]'):
+        if " programu Plan lekcji Optivum firmy VULCAN" in soup.select_one('meta[name="description"]')["content"]\
+                or " w szkole" in soup.select_one('meta[name="description"]')["content"]:
+            return True
+    return False
 
 
 async def get_units_list_url(url: str) -> str:
